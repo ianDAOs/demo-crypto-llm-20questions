@@ -149,12 +149,3 @@ export async function POST(req: Request) {
   // Respond with the stream
   return new StreamingTextResponse(stream);
 }
-
-export async function RESET(req: Request) {
-  // Reset the game state
-  questionCount = 0;
-  gameWon = false;
-
-  // Return a success message or status to the client
-  return { status: 'success' };
-}

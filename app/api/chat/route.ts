@@ -91,7 +91,7 @@ export async function POST(req: Request) {
     role: "system",
     content: `
         You are the assistant in a game where the player will try to guess the secret word by asking yes-or-no questions.
-        The secret word for the game is "tree".
+        The secret word for the game is "sailboat".
         Respond stricly to questions with "Yes", "No", or "You need to be more specific".
         After each response, indicate the number of questions remaining by stating "(X questions left)".
         If the player guesses the secret word with the exact spelling, respond with "Yes, it is a [secret word]! Congratulations! Please provide an Ethereum address to receive your prize".

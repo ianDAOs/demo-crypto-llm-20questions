@@ -17,9 +17,9 @@ export default function Chat() {
             className="text-blue-500 hover:underline"
             target="_blank"
           >
-            Syndicate
+            Syndicate's APIs
           </a>
-          , OpenAI, and Next.js
+          , OpenAI's APIs, and Next.js
         </p>
       </div>
       <div className="flex flex-col w-full max-w-md pt-20 pb-48 mx-auto stretch">

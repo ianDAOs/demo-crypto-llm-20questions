@@ -19,7 +19,7 @@ export default function Chat() {
           >
             Syndicate's APIs
           </a>
-          —and did not require any custom built or third-party key, wallet, transaction, or gas management infrastructure.
+          —and did not require any custom built key, wallet, transaction, or gas management infrastructure.
         </p>
       </div>
       <div className="flex flex-col w-full max-w-md pt-20 pb-48 mx-auto stretch">

@@ -9,17 +9,16 @@ export default function Chat() {
     <div>
       <div className="container mx-auto px-10 md:px-28">
         <h1 className="text-4xl font-bold text-center pt-20 pb-6">20 Questions with a crypto-enabled LLM</h1>
-        <h2 className="text-md md:text-lg font-light text-center pb-8">I'm thinking of a word. You can ask up to 20 yes-or-no questions, like "Is it a type of machine?" If you can correctly guess the word, I'll send you a special NFT. Want to play?</h2>
-        <p className="text-xs font-extralight text-gray-500 text-center px-4 md:px-28">
-          This demo was built with only Next.js, OpenAI's APIs, and{' '}
+        <h2 className="text-md md:text-xl font-light text-center pb-8 px-8 lg:px-26">I'm thinking of a word. You can ask up to 20 yes-or-no questions, like "Is it a type of machine?" If you can correctly guess the word, I'll send you a special NFT. Let's play.</h2>
+        <p className="text-xs font-extralight text-gray-500 text-center px-8">
+          This demo was built with just Next.js, OpenAI's API, and{' '}
           <a 
             href="https://syndicate.io"
             className="text-blue-500 hover:underline"
             target="_blank"
           >
-            Syndicate's APIs
+            Syndicate's Transaction Cloud API
           </a>
-          —and did not require any custom built key, wallet, transaction, or gas management infrastructure.
         </p>
       </div>
       <div className="flex flex-col w-full max-w-md pt-20 pb-48 mx-auto stretch">

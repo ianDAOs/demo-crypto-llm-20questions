@@ -19,6 +19,7 @@ export default function Chat() {
           >
             Syndicate's Transaction Cloud API
           </a>
+          —no custom backend for keys, wallets, transactions, gas, or RPCs was required.
         </p>
       </div>
       <div className="flex flex-col w-full max-w-md pt-20 pb-48 mx-auto stretch">

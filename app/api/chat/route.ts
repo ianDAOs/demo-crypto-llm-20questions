@@ -124,7 +124,7 @@ export async function POST(req: Request) {
     } catch (error) {
       console.error('Error getting random word:', error);
       // Handle error (e.g., by setting a default secret word)
-      secretWord = 'pencil';
+      secretWord = 'surfboard';
     }
   }
 

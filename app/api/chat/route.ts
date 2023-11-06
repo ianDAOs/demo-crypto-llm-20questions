@@ -100,32 +100,33 @@ export async function POST(req: Request) {
 
   // If a secret word has not been chosen yet, get a random word from OpenAI
   if (!secretWord) {
-    try {
-      const wordResponse = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages: [{
-          role: 'system',
-          content: 'You are a helpful assistant that generates a random common object when asked.'
-        }, {
-          role: 'user',
-          content: 'Generate a random common noun.'
-        }],
-        max_tokens: 10,  // Increased max_tokens to ensure the response isn't cut off
-        temperature: 1.0,
-      });
+    secretWord = 'surfboard';
+    // try {
+    //   const wordResponse = await openai.chat.completions.create({
+    //     model: 'gpt-3.5-turbo',
+    //     messages: [{
+    //       role: 'system',
+    //       content: 'You are a helpful assistant that generates a random common object when asked.'
+    //     }, {
+    //       role: 'user',
+    //       content: 'Generate a random common noun.'
+    //     }],
+    //     max_tokens: 10,  // Increased max_tokens to ensure the response isn't cut off
+    //     temperature: 1.0,
+    //   });
   
-      // Check if the response contains the expected structure
-      if (wordResponse.choices && wordResponse.choices[0] && wordResponse.choices[0].message && wordResponse.choices[0].message.content) {
-        // Use the text of the OpenAI response as the secret word
-        secretWord = wordResponse.choices[0].message.content.trim();
-      } else {
-        throw new Error('Unexpected response structure');
-      }
-    } catch (error) {
-      console.error('Error getting random word:', error);
-      // Handle error (e.g., by setting a default secret word)
-      secretWord = 'surfboard';
-    }
+    //   // Check if the response contains the expected structure
+    //   if (wordResponse.choices && wordResponse.choices[0] && wordResponse.choices[0].message && wordResponse.choices[0].message.content) {
+    //     // Use the text of the OpenAI response as the secret word
+    //     secretWord = wordResponse.choices[0].message.content.trim();
+    //   } else {
+    //     throw new Error('Unexpected response structure');
+    //   }
+    // } catch (error) {
+    //   console.error('Error getting random word:', error);
+    //   // Handle error (e.g., by setting a default secret word)
+    //   secretWord = 'surfboard';
+    // }
   }
 
   // If the game has already been won and the prize has been sent
@@ -177,7 +178,7 @@ export async function POST(req: Request) {
   // Combine the game context with the user prompts into an array
   const combinedMessages = [gameContext, ...messages];
 
-  // If the user has won the game, send them an NFT
+  // If the user guesses the correct word, send them an NFT
   if (questionCount > 1 && combinedMessages[combinedMessages.length - 2].content.includes('prize')) {
     
     // Update the game state to won

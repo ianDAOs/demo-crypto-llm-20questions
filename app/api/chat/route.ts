@@ -203,7 +203,7 @@ export async function POST(req: Request) {
 
   }
 
-  // If the game hasn't been won (and is asking for an Ethereum address) and the max questions have been asked, end the game
+  // If the game hasn't been won and the max questions have been asked, end the game
   if (!gameWon && questionCount > maxQuestions) {
     const gameEndMessage = new TextEncoder().encode("You've run out of questions! So close. Play again!");
     return new StreamingTextResponse(new ReadableStream({

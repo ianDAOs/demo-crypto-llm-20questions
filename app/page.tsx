@@ -13,7 +13,7 @@ export default function Chat() {
         <p className="text-xs font-extralight text-gray-500 text-center px-8">
           This demo was built with just Next.js, OpenAI's API, and{' '}
           <a 
-            href="https://syndicate.io"
+            href="https://docs.syndicate.io"
             className="text-blue-500 hover:underline"
             target="_blank"
           >

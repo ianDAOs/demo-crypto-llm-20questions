@@ -19,7 +19,14 @@ export default function Chat() {
           >
             Syndicate's Transaction Cloud API
           </a>
-          —no custom backend for keys, wallets, transactions, gas, or RPCs was required.
+          —no custom backend for keys, wallets, transactions, gas, or RPCs was required. Check out the repo{' '}
+          <a 
+            href="https://github.com/ianDAOs/demo-crypto-llm-20questions"
+            className="text-blue-500 hover:underline"
+            target="_blank"
+          >
+            here
+          </a>
         </p>
       </div>
       <div className="flex flex-col w-full max-w-md pt-20 pb-48 mx-auto stretch">

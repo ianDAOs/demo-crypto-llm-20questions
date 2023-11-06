@@ -105,7 +105,7 @@ export async function POST(req: Request) {
         model: 'gpt-3.5-turbo',
         messages: [{
           role: 'system',
-          content: 'You are a helpful assistant that generates a random common noun when asked.'
+          content: 'You are a helpful assistant that generates a random common object when asked.'
         }, {
           role: 'user',
           content: 'Generate a random common noun.'
@@ -141,6 +141,17 @@ export async function POST(req: Request) {
 
   // Update the questions asked count
   questionCount++;
+
+  // If the game hasn't been won and the max questions have been asked, end the game
+  if (!gameWon && questionCount > maxQuestions) {
+    const gameEndMessage = new TextEncoder().encode("You've run out of questions! So close. Play again!");
+    return new StreamingTextResponse(new ReadableStream({
+      start(controller) {
+        controller.enqueue(gameEndMessage);
+        controller.close();
+      }
+    }));
+  }
 
   // Extract the user prompt from the body of the request and convert it to lowercase
   const { messages } = await req.json();
@@ -201,17 +212,6 @@ export async function POST(req: Request) {
       }));
     }
 
-  }
-
-  // If the game hasn't been won and the max questions have been asked, end the game
-  if (!gameWon && questionCount > maxQuestions) {
-    const gameEndMessage = new TextEncoder().encode("You've run out of questions! So close. Play again!");
-    return new StreamingTextResponse(new ReadableStream({
-      start(controller) {
-        controller.enqueue(gameEndMessage);
-        controller.close();
-      }
-    }));
   }
 
   // Ask OpenAI for a streaming chat completion given the prompt

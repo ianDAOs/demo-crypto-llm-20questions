@@ -116,7 +116,6 @@ export async function POST(req: Request) {
   if (!gameWon && questionCount > maxQuestions) {
     const gameEndMessage = new TextEncoder().encode("You've run out of questions! So close. Try again!");
     questionCount = 0;  // Reset the question count
-    secretWord = '';  // Reset the secret word
     gameWon = false;  // Reset the game state
     return new StreamingTextResponse(new ReadableStream({
       start(controller) {

@@ -130,7 +130,10 @@ export async function POST(req: Request) {
 
   // If the game has already been won and the prize has been sent
   if (gameWon) {
-    const gameEndMessage = new TextEncoder().encode("Play again for another prize!");
+    const gameEndMessage = new TextEncoder().encode("Let's play again! I'm thinking of a new word.");
+    questionCount = 0;  // Reset the question count
+    secretWord = '';  // Reset the secret word
+    gameWon = false;  // Reset the game state
     return new StreamingTextResponse(new ReadableStream({
       start(controller) {
         controller.enqueue(gameEndMessage);
@@ -168,7 +171,7 @@ export async function POST(req: Request) {
         The secret word for the game is "${secretWord}".
         Respond stricly to questions with "Yes", "No", or "You need to be more specific".
         After each response, indicate the number of questions remaining by stating "(X questions left)".
-        If the player guesses the secret word with the exact spelling, respond with "Yes, it is a [secret word]! Congratulations! Please provide an Ethereum address to receive your prize".
+        If the player guesses the secret word with the exact spelling, respond with "Yes, it is a [secret word]! Congratulations! Please provide an Ethereum address to receive your prize", and reset the game.
         Otherwise, respond with "No, it is not a [word]".
         Do not provide any additional information or hints.
         Do not reference or repeat previous interactions.

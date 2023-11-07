@@ -33,7 +33,7 @@ export default function Chat() {
         {messages.length > 0
           ? messages.map((m, index) => (
               <div key={index} className="whitespace-pre-wrap py-1">
-                {m.role === 'user' ? <span className="text-lg font-bold text-cyan-600">You: </span>: <span className="text-lg font-bold text-purple-600">LLM: </span>}
+                {m.role === 'user' ? <span className="text-lg font-bold text-cyan-600">You: </span>: <span className="text-lg font-bold text-purple-600">GPT: </span>}
                 {m.role === 'assistant' ? m.content : m.content}
               </div>
             ))

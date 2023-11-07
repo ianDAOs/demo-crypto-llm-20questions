@@ -3,7 +3,6 @@ import OpenAI from 'openai';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import fetch from 'node-fetch';
 
-let secretWord = '';  // Initialize secret word
 let questionCount = 0;  // Initialize question count
 const maxQuestions = 20;  // Set max questions
 let gameWon = false; // Initialize game state
@@ -98,42 +97,10 @@ async function getTransactionHash(transactionId: string): Promise<string> {
 // Main chat route
 export async function POST(req: Request) {
 
-  // If a secret word has not been chosen yet, get a random word from OpenAI
-  if (!secretWord) {
-    try {
-      const wordResponse = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages: [{
-          role: 'system',
-          content: 'You are a helpful assistant that generates a random common object when asked.'
-        }, {
-          role: 'user',
-          content: 'Generate a random common noun.'
-        }],
-        max_tokens: 10,  // Increased max_tokens to ensure the response isn't cut off
-        temperature: 1.0,
-      });
-  
-      // Check if the response contains the expected structure
-      if (wordResponse.choices && wordResponse.choices[0] && wordResponse.choices[0].message && wordResponse.choices[0].message.content) {
-        // Use the text of the OpenAI response as the secret word
-        secretWord = wordResponse.choices[0].message.content.trim();
-      } else {
-        throw new Error('Unexpected response structure');
-      }
-    } catch (error) {
-      console.error('Error getting random word:', error);
-      // Handle error (e.g., by setting a default secret word)
-      secretWord = 'surfboard';
-    }
-  }
-
   // If the game has already been won and the prize has been sent
   if (gameWon) {
-    const gameEndMessage = new TextEncoder().encode("Let's play again! I'm thinking of a new word.");
-    questionCount = 0;  // Reset the question count
-    secretWord = '';  // Reset the secret word
-    gameWon = false;  // Reset the game state
+    const gameEndMessage = new TextEncoder().encode("You already won! Thanks for playing!");
+
     return new StreamingTextResponse(new ReadableStream({
       start(controller) {
         controller.enqueue(gameEndMessage);
@@ -168,7 +135,7 @@ export async function POST(req: Request) {
     role: "system",
     content: `
         You are the assistant in a game where the player will try to guess the secret word by asking yes-or-no questions.
-        The secret word for the game is "${secretWord}".
+        The secret word for the game is "surfboard".
         Respond stricly to questions with "Yes", "No", or "You need to be more specific".
         After each response, indicate the number of questions remaining by stating "(X questions left)".
         If the player guesses the secret word with the exact spelling, respond with "Yes, it is a [secret word]! Congratulations! Please provide an Ethereum address to receive your prize", and reset the game.

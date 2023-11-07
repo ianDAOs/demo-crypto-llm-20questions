@@ -10,16 +10,18 @@ export default function Chat() {
       <div className="container mx-auto px-10 md:px-28">
         <h1 className="text-4xl font-bold text-center pt-20 pb-6">20 Questions with a crypto-enabled LLM</h1>
         <h2 className="text-md md:text-xl font-light text-center pb-8 px-8 lg:px-26">I'm thinking of a word. You can ask up to 20 yes-or-no questions, like "Is it a type of machine?" If you can correctly guess the word, I'll send you a special NFT. Let's play.</h2>
-        <p className="text-xs font-extralight text-gray-500 text-center px-8">
+        <p className="text-xs font-extralight text-gray-500 text-center xs:px-24">
           This demo was built with just Next.js, OpenAI's API, and{' '}
           <a 
             href="https://docs.syndicate.io"
             className="text-blue-500 hover:underline"
             target="_blank"
           >
-            Syndicate's Transaction Cloud API
+            Syndicate's Transaction Cloud API.
           </a>
-          —no custom backend for keys, wallets, transactions, gas, or RPCs was required. Check out the repo{' '}
+          </p>
+          <p className="text-xs font-extralight text-gray-500 text-center xs:px-24">
+            No custom backend for keys, wallets, transactions, gas, or RPCs was required. Check out the repo{' '}
           <a 
             href="https://github.com/ianDAOs/demo-crypto-llm-20questions"
             className="text-blue-500 hover:underline"

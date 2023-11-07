@@ -1,6 +1,6 @@
 # Crypto-Enabled GPT using Vercel AI SKD, Next.js, OpenAI, and Syndicate Example
 
-This example shows how to use the [Vercel AI SDK](https://sdk.vercel.ai/docs), [Next.js](https://nextjs.org), [OpenAI](https://openai.com), and [Syndicate](https://docs.syndicate.io) to create a crypto-enabled GPT chat bot that can send crypto transactions. In this example, the GPT thinks of and hides a secret word, and if the player can correctly guess it, the GPT will send the player an NFT as a prize onchain.
+This example shows how to use the [Vercel AI SDK](https://sdk.vercel.ai/docs), [Next.js](https://nextjs.org), [OpenAI](https://openai.com), and [Syndicate](https://docs.syndicate.io) to create a crypto-enabled GPT chat bot that can send crypto transactions. In this example, the GPT is hiding a secret word, and if the player can correctly guess it, the GPT will send the player an NFT as a prize onchain.
 
 ## Requirements
 

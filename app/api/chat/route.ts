@@ -15,9 +15,10 @@ const openai = new OpenAI({
 // IMPORTANT! Set the runtime to edge
 export const runtime = 'edge';
 
+// send an NFT as a prize to the user
 async function sendNFT(ethAddress: string) {
 
-  // Define the API endpoint
+  // Define the Syndicate API endpoint
   const endpoint = 'https://api.syndicate.io/transact/sendTransaction';
 
   // Define the headers
@@ -40,7 +41,7 @@ async function sendNFT(ethAddress: string) {
   // Sent the API request and return the response based on the status code
   try {
 
-    // Send the API request
+    // Send the API request to Syndicate
     const response = await fetch(endpoint, {
       method: 'POST',
       headers,
@@ -66,7 +67,7 @@ async function sendNFT(ethAddress: string) {
   }
 }
 
-// Get transaction hash with retry logic
+// Get transaction hash from transactionId using Syndicate API with retry logic
 async function getTransactionHash(transactionId: string): Promise<string> {
   let transactionHash = '';
   const options = {
@@ -85,7 +86,7 @@ async function getTransactionHash(transactionId: string): Promise<string> {
     } catch (error) {
       console.error('Error getting transaction details:', error);
     }
-    // Optional: sleep for a few seconds before retrying
+    // Wati for a few seconds before retrying
     if (!transactionHash) {
       await new Promise(resolve => setTimeout(resolve, 5000));  // Wait for 5 seconds
     }
@@ -99,8 +100,7 @@ export async function POST(req: Request) {
 
   // If the game has already been won and the prize has been sent
   if (gameWon) {
-    const gameEndMessage = new TextEncoder().encode("You already won! Thanks for playing!");
-
+    const gameEndMessage = new TextEncoder().encode("You won the prize. Congratulations!");
     return new StreamingTextResponse(new ReadableStream({
       start(controller) {
         controller.enqueue(gameEndMessage);
@@ -114,9 +114,7 @@ export async function POST(req: Request) {
 
   // If the game hasn't been won and the max questions have been asked, end the game
   if (!gameWon && questionCount > maxQuestions) {
-    const gameEndMessage = new TextEncoder().encode("You've run out of questions! So close. Try again!");
-    questionCount = 0;  // Reset the question count
-    gameWon = false;  // Reset the game state
+    const gameEndMessage = new TextEncoder().encode("You've run out of questions! So close.");
     return new StreamingTextResponse(new ReadableStream({
       start(controller) {
         controller.enqueue(gameEndMessage);
@@ -127,14 +125,13 @@ export async function POST(req: Request) {
 
   // Extract the user prompt from the body of the request and convert it to lowercase
   const { messages } = await req.json();
-  const userMessage = messages[messages.length - 1].content.toLowerCase();
 
-  // Update the game context based on the current game state
+  // Game context that is sent to OpenAI
   const gameContext = {
     role: "system",
     content: `
-        You are the assistant in a game where the player will try to guess the secret word by asking yes-or-no questions.
-        The secret word for the game is "surfboard".
+        You are the assistant in a game where the player will try to guess the secret word by asking up to 20 yes-or-no questions.
+        The secret word for the game is "sailboat".
         Respond stricly to questions with "Yes", "No", or "You need to be more specific".
         After each response, indicate the number of questions remaining by stating "(X questions left)".
         If the player guesses the secret word with the exact spelling, respond with "Yes, it is a [secret word]! Congratulations! Please provide an Ethereum address to receive your prize", and reset the game.
@@ -162,7 +159,7 @@ export async function POST(req: Request) {
     // Fetch the transaction hash
     const transactionHash = await getTransactionHash(sendNftResponse.data.transactionId);
 
-    // If there is a transaction hash, construct the URL and message
+    // If there is a transaction hash, send a message with the transaction URL
     if (transactionHash) {
       const transactionUrl = `https://mumbai.polygonscan.com/tx/${transactionHash}`;
       const sentNftMessage = new TextEncoder().encode(`Thank you! Your prize has been sent to ${ethAddress}. See it at ${transactionUrl}`);
